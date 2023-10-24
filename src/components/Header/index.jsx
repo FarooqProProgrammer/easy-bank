@@ -1,12 +1,22 @@
 import { Avatar, Box, Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, Heading, IconButton, Input, List, ListIcon, ListItem, Text, useDisclosure } from '@chakra-ui/react'
-import React from 'react'
-import { AiOutlineEdit,AiOutlineUser, AiOutlineLeft, AiOutlineMenu,AiOutlineRight, AiOutlineNotification, AiOutlineSearch, AiOutlineSetting } from 'react-icons/ai'
+import React, { useState } from 'react'
+import { AiOutlineEdit, AiOutlineUser, AiOutlineLeft, AiOutlineMenu, AiOutlineRight, AiOutlineNotification, AiOutlineSearch, AiOutlineSetting } from 'react-icons/ai'
 import { MdUpgrade } from "react-icons/md"
-import {RiTodoLine} from "react-icons/ri"
+import { RiTodoLine } from "react-icons/ri"
+import BottomSheetModal from '../../common/BottomSheetModal'
 
 export default function Header() {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const btnRef = React.useRef()
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
     return (
         <>
             <div className=' w-full flex py-2  px-2   border shadow-lg bg-green-500  justify-between items-center'>
@@ -22,7 +32,7 @@ export default function Header() {
                     alignItems={'center'}
                     gap={2}
                 >
-                    <IconButton>
+                    <IconButton onClick={openModal}>
                         <AiOutlineSearch />
                     </IconButton>
                     <IconButton>
@@ -81,26 +91,26 @@ export default function Header() {
                         </Box>
                         <div className='w-full max-h-[280px] overflow-y-auto '>
                             <List spacing={2} mt={5} >
-                            <ListItem display={'flex'}   py={1}>
-                                <ListIcon as={MdUpgrade} fontSize={22} color='green.500' />
-                                Upgrade
-                            </ListItem>
-                            <ListItem display={'flex'}   py={1}>
-                                <ListIcon as={AiOutlineUser} fontSize={22} color='green.500' />
-                                Account Level
-                            </ListItem>
-                            <ListItem display={'flex'}   py={1}>
-                                <ListIcon as={AiOutlineSetting} fontSize={22} color='green.500' />
-                                Account Settings
-                            </ListItem>
-                            <ListItem display={'flex'}   py={1}>
-                                <ListIcon as={RiTodoLine} fontSize={22} color='green.500' />
-                                Transaction History
-                            </ListItem>
-                           
-                        </List> 
+                                <ListItem display={'flex'} py={1}>
+                                    <ListIcon as={MdUpgrade} fontSize={22} color='green.500' />
+                                    Upgrade
+                                </ListItem>
+                                <ListItem display={'flex'} py={1}>
+                                    <ListIcon as={AiOutlineUser} fontSize={22} color='green.500' />
+                                    Account Level
+                                </ListItem>
+                                <ListItem display={'flex'} py={1}>
+                                    <ListIcon as={AiOutlineSetting} fontSize={22} color='green.500' />
+                                    Account Settings
+                                </ListItem>
+                                <ListItem display={'flex'} py={1}>
+                                    <ListIcon as={RiTodoLine} fontSize={22} color='green.500' />
+                                    Transaction History
+                                </ListItem>
+
+                            </List>
                         </div>
-                       
+
                     </DrawerBody>
 
                     <DrawerFooter>
@@ -111,6 +121,13 @@ export default function Header() {
                     </DrawerFooter>
                 </DrawerContent>
             </Drawer>
+
+
+            <BottomSheetModal isOpen={isModalOpen} onClose={closeModal}>
+                <div className='w-full flex'>
+                    <input className='py-2 w-full  px-3 rounded-md border border-black outline-none' placeholder='Search' />
+                </div>
+            </BottomSheetModal>
         </>
 
     )
